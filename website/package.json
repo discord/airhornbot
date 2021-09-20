@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.3.4",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "create-react-class": "^15.7.0",
     "detect-browser": "^5.2.0",
     "flux": "^4.0.1",
