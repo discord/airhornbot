@@ -4219,10 +4219,10 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-flux@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/flux/-/flux-4.0.1.tgz#7843502b02841d4aaa534af0b373034a1f75ee5c"
-  integrity sha512-emk4RCvJ8RzNP2lNpphKnG7r18q8elDYNAPx7xn+bDeOIo9FFfxEfIQ2y6YbQNmnsGD3nH1noxtLE64Puz1bRQ==
+flux@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/flux/-/flux-4.0.2.tgz#d71dcaf6cb51ca059f303f3d964d6f325d444952"
+  integrity sha512-u/ucO5ezm3nBvdaSGkWpDlzCePoV+a9x3KHmy13TV/5MzOaCZDN8Mfd94jmf0nOi8ZZay+nOKbBUkOe2VNaupQ==
   dependencies:
     fbemitter "^3.0.0"
     fbjs "^3.0.0"
