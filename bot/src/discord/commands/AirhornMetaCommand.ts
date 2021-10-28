@@ -22,6 +22,7 @@ export class AirhornMetaCommand extends DiscordCommand {
       return discordCommandResponder.sendBackMessage("Add me to your server: <https://discord.com/api/oauth2/authorize?client_id=" + config.discord.applicationId + "&permissions=3146752&scope=applications.commands%20bot>", false);
     }
     case "stats": {
+      await discordCommandResponder.sendBackDeferredMessageWithSource();
       const lines = [
         "**Statistics**"
       ];
@@ -40,7 +41,7 @@ export class AirhornMetaCommand extends DiscordCommand {
         lines.push("You: " + totalSelfCount.toLocaleString("en-US"));
       }
       // Send back the stats
-      return discordCommandResponder.sendBackMessage(lines.join("\n"), true);
+      return discordCommandResponder.editOriginalMessage(lines.join("\n"));
     }
     }
   }

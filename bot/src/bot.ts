@@ -42,6 +42,7 @@ export class AirhornBot {
     for (let i = 0; i < soundKeys.length; i++) {
       this.registerCommand(new AirhornCommand(soundKeys[i]));
     }
+    this.registerCommand(new AirhornCommand("random"));
     this.registerCommand(new AirhornMetaCommand());
     this.registerCommand(new SoundboardCommand());
     // Register the buttons

@@ -106,10 +106,12 @@ export function convertButtonsIntoButtonGrid(buttonComponents: DiscordComponent[
 
 export class DiscordCommandResponder {
 
+  public readonly applicationId: string;
   public readonly interactionId: string;
   public readonly interactionToken: string;
 
-  constructor(interactionId: string, interactionToken: string) {
+  constructor(applicationId: string, interactionId: string, interactionToken: string) {
+    this.applicationId = applicationId;
     this.interactionId = interactionId;
     this.interactionToken = interactionToken;
   }
@@ -125,9 +127,27 @@ export class DiscordCommandResponder {
     });
   }
 
+  async sendBackDeferredMessageWithSource(): Promise<void> {
+    await DiscordCommandResponder.sendInteractionCallback(this.interactionId, this.interactionToken, {
+      type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
+    });
+  }
+
   async sendBackDeferredUpdateMessage(): Promise<void> {
     await DiscordCommandResponder.sendInteractionCallback(this.interactionId, this.interactionToken, {
       type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE
+    });
+  }
+
+  async editOriginalMessage(text: string): Promise<void> {
+    await fetch("https://discord.com/api/v8/webhooks/" + this.applicationId + "/" + this.interactionToken + "/messages/@original", {
+      method: "patch",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        content: text,
+      })
     });
   }
 
