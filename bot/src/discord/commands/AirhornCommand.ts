@@ -80,7 +80,7 @@ export class AirhornCommand extends DiscordCommand {
               soundName: sound.sound,
               soundVariant: sound.variant
             }),
-            emoji: config.sounds[this.name].emoji ? {
+            emoji: (config.sounds[this.name] !== undefined && config.sounds[this.name].emoji) ? {
               id: String(config.sounds[this.name].emoji)
             } : {
               id: String(config.discord.emojis.airhorn)
