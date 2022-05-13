@@ -159,6 +159,15 @@
         "idle": "villager_idle.ogg",
         "trade": "villager_trade.ogg"
       }
+    },
+    "birthday": {
+      "name": "Birthday",
+      "description": "Happy birthday!",
+      "emoji": "974671718864019456",
+      "variants": {
+        "confetti": "birthday_confetti.ogg",
+        "happy": "birthday_happy.ogg"
+      }
     }
   }
 }
