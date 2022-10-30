@@ -49,3 +49,7 @@ To run the web server:
 cd bot
 yarn run web
 ```
+
+
+oauth URL:
+https://discord.com/api/oauth2/authorize?client_id=1036007046757220443&permissions=36703232&scope=applications.commands%20bot
