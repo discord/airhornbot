@@ -1,5 +1,6 @@
 import {Client} from "discord.js-light";
 import {config} from "./utils/Configuration";
+import {configSecrets} from "./utils/ConfigurationSecrets";
 import {DiscordListener} from "./discord/DiscordListener";
 import {ReadyListener} from "./discord/listeners/ReadyListener";
 import {InteractionCreateListener} from "./discord/listeners/InteractionCreateListener";
@@ -50,7 +51,7 @@ export class AirhornBot {
   }
 
   async start(): Promise<void> {
-    await this.client.login(config.discord.token);
+    await this.client.login(configSecrets.discord.token);
   }
 
   registerListener(discordListener: DiscordListener): void {

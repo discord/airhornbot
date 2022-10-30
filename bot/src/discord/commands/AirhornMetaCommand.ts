@@ -1,7 +1,7 @@
 import {DiscordCommand} from "../DiscordCommand";
 import {Client} from "discord.js-light";
 import {getCountForKey, sumOfKeys} from "../../utils/RedisUtils";
-import {config} from "../../utils/Configuration";
+import {configSecrets} from "../../utils/ConfigurationSecrets";
 import {CommandInteraction, DiscordCommandResponder} from "../DiscordInteraction";
 
 export class AirhornMetaCommand extends DiscordCommand {
@@ -19,7 +19,7 @@ export class AirhornMetaCommand extends DiscordCommand {
     switch (subcommandName.toLowerCase()) {
     case "invite": {
       // Send back the invite
-      return discordCommandResponder.sendBackMessage("Add me to your server: <https://discord.com/api/oauth2/authorize?client_id=" + config.discord.applicationId + "&permissions=3146752&scope=applications.commands%20bot>", false);
+      return discordCommandResponder.sendBackMessage("Add me to your server: <https://discord.com/api/oauth2/authorize?client_id=" + configSecrets.discord.applicationId + "&permissions=3146752&scope=applications.commands%20bot>", false);
     }
     case "stats": {
       await discordCommandResponder.sendBackDeferredMessageWithSource();
@@ -27,17 +27,17 @@ export class AirhornMetaCommand extends DiscordCommand {
         "**Statistics**"
       ];
       // Global count
-      const totalGlobalCount = await getCountForKey(config.redis.prefix + ":total");
+      const totalGlobalCount = await getCountForKey(configSecrets.redis.prefix + ":total");
       lines.push("Global: " + totalGlobalCount.toLocaleString("en-US"));
       // Guild count (if run in guild)
       if (interaction.member) {
-        const totalGuildCount = await sumOfKeys(config.redis.prefix + ":counts:guild:" + interaction.guild_id + ":sound:*");
+        const totalGuildCount = await sumOfKeys(configSecrets.redis.prefix + ":counts:guild:" + interaction.guild_id + ":sound:*");
         lines.push("Guild: " + totalGuildCount.toLocaleString("en-US"));
       }
       // Self count (if the user id is found)
       const userId = interaction.member ? interaction.member.user.id : (interaction.user ? interaction.user.id : undefined);
       if (userId) {
-        const totalSelfCount = await sumOfKeys(config.redis.prefix + ":counts:user:" + userId + ":sound:*");
+        const totalSelfCount = await sumOfKeys(configSecrets.redis.prefix + ":counts:user:" + userId + ":sound:*");
         lines.push("You: " + totalSelfCount.toLocaleString("en-US"));
       }
       // Send back the stats

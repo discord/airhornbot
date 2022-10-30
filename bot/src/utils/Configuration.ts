@@ -1,6 +1,24 @@
 import {readFileSync} from "fs";
 
 interface Configuration {
+  
+  settings: {
+    maxQueueSize: number;
+  }
+
+  sounds: {
+    [key: string]: {
+      name: string;
+      description: string;
+      emoji: string | undefined;
+      variants: {
+        [key: string]: string;
+      };
+    };
+  };
+}
+
+interface ConfigurationSecrets {
 
   discord: {
     applicationId: string;
@@ -23,21 +41,7 @@ interface Configuration {
     password: string;
     prefix: string;
   };
-
-  settings: {
-    maxQueueSize: number;
-  }
-
-  sounds: {
-    [key: string]: {
-      name: string;
-      description: string;
-      emoji: string | undefined;
-      variants: {
-        [key: string]: string;
-      };
-    };
-  };
 }
 
 export const config: Configuration = JSON.parse(readFileSync("./config.json").toString());
+export const config: ConfigurationSecrets = JSON.parse(readFileSync("./config_secrets.json").toString());

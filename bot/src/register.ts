@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import {config} from "./utils/Configuration";
+import {configSecrets} from "./utils/ConfigurationSecrets";
 
 const specifiedCommandArgs = process.argv.slice(2);
 
@@ -18,10 +19,10 @@ const guildId = specifiedCommandArgs[1] || undefined;
 
   // Clear all of the commands if the mode is clear and then exit
   if (mode.toLowerCase() === "clear") {
-    const response = await fetch("https://discord.com/api/v8/applications/" + config.discord.applicationId + guildUrlPart + "/commands", {
+    const response = await fetch("https://discord.com/api/v8/applications/" + configSecrets.discord.applicationId + guildUrlPart + "/commands", {
       method: "put",
       headers: {
-        "authorization": "Bot " + config.discord.token,
+        "authorization": "Bot " + configSecrets.discord.token,
         "content-type": "application/json"
       },
       body: JSON.stringify([])
@@ -106,7 +107,7 @@ const guildId = specifiedCommandArgs[1] || undefined;
     ]
   });
 
-  const response = await fetch("https://discord.com/api/v8/applications/" + config.discord.applicationId + guildUrlPart + "/commands", {
+  const response = await fetch("https://discord.com/api/v8/applications/" + configSecrets.discord.applicationId + guildUrlPart + "/commands", {
     method: "put",
     headers: {
       "authorization": "Bot " + config.discord.token,
