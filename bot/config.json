@@ -146,9 +146,10 @@
       "description": "Naur",
       "emoji": "847138944302055455",
       "variants": {
-        "znaurogg": "znaur.ogg",
-        "znaurzero": "znaurzero.ogg",
-        "znauropus": "znaur-opus.ogg"
+        "naur": "ah-naur-opus.ogg",
+        "naurspam": "naurspam-opus.ogg",
+        "naurjam": "naurjam-opus.ogg",
+        "znaur": "znaur-opus.ogg"
       }
     },
     "birthday": {
