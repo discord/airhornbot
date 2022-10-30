@@ -89,7 +89,9 @@ export class AirhornCommand extends DiscordCommand {
         ]
       }
     ]);
+    console.log(sound.sound);
     trackPlay(guild.id, voiceChannel.id, guildMember.id, sound.sound);
+
     // Dispatch the sound
     enqueueSound(voiceChannel, sound.variantFile);
   }
