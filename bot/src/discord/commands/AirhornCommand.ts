@@ -1,6 +1,7 @@
 import {DiscordCommand} from "../DiscordCommand";
 import {Client} from "discord.js-light";
 import {config} from "../../utils/Configuration";
+import {configSecrets} from "../../utils/ConfigurationSecrets";
 import {
   CommandInteraction,
   DiscordCommandResponder,
@@ -30,7 +31,7 @@ export class AirhornCommand extends DiscordCommand {
     if (!guildMember) {
       return discordCommandResponder.sendBackMessage("You were not found in the guild.", false);
     }
-    const botGuildMember = await guild.members.fetch(config.discord.botId);
+    const botGuildMember = await guild.members.fetch(configSecrets.discord.botId);
     if (!botGuildMember) {
       return discordCommandResponder.sendBackMessage("The bot was not found in the guild.", false);
     }
@@ -83,7 +84,7 @@ export class AirhornCommand extends DiscordCommand {
             emoji: (config.sounds[this.name] !== undefined && config.sounds[this.name].emoji) ? {
               id: String(config.sounds[this.name].emoji)
             } : {
-              id: String(config.discord.emojis.airhorn)
+              id: String(configSecrets.discord.emojis.airhorn)
             }
           }
         ]

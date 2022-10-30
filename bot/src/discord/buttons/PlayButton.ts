@@ -1,4 +1,4 @@
-import {config} from "../../utils/Configuration";
+import {configSecrets} from "../../utils/ConfigurationSecrets";
 import {
   ComponentInteraction,
   DiscordCommandResponder,
@@ -33,7 +33,7 @@ export class PlayButton extends DiscordButton {
     if (!guildMember) {
       return discordCommandResponder.sendBackMessage("You were not found in the guild.", false);
     }
-    const botGuildMember = await guild.members.fetch(config.discord.botId);
+    const botGuildMember = await guild.members.fetch(configSecrets  .discord.botId);
     if (!botGuildMember) {
       return discordCommandResponder.sendBackMessage("The bot was not found in the guild.", false);
     }

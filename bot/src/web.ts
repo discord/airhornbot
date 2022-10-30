@@ -1,7 +1,7 @@
 import * as http from "http";
 import express, {Application, Request, Response} from "express";
 import {apiEventsRouteHandler} from "./web/ApiEventsRoute";
-import {config} from "./utils/Configuration";
+import {configSecrets} from "./utils/ConfigurationSecrets";
 
 export class AirhornWeb {
 
@@ -14,9 +14,9 @@ export class AirhornWeb {
     this.httpServer = new http.Server(this.expressApplication);
     // Register the routes
     this.expressApplication.get("/api/events", apiEventsRouteHandler);
-    if (config.web.hostStatic) {
+    if (configSecrets.web.hostStatic) {
       // Serve the static files for the site if enabled
-      this.expressApplication.use(express.static(config.web.staticDirectory));
+      this.expressApplication.use(express.static(configSecrets.web.staticDirectory));
     }
     // Send a 404 when the path is not found.
     this.expressApplication.use(((req: Request, res: Response) => {
@@ -25,8 +25,8 @@ export class AirhornWeb {
   }
 
   async start(): Promise<void> {
-    this.httpServer.listen(config.web.port, () => {
-      console.log("Web server is now listening on " + config.web.port);
+    this.httpServer.listen(configSecrets.web.port, () => {
+      console.log("Web server is now listening on " + configSecrets.web.port);
     });
   }
 }

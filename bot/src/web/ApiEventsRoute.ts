@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import EventEmitter from "events";
 import {getCountForKey, getCountForSetKey} from "../utils/RedisUtils";
-import {config} from "../utils/Configuration";
+import {configSecrets} from "../utils/ConfigurationSecrets";
 
 let counter = 0;
 
@@ -11,11 +11,11 @@ eventEmitter.setMaxListeners(0);
 
 setInterval(async () => {
   // Get the sum of the total count for every row
-  const totalGlobalCount = await getCountForKey(config.redis.prefix + ":total");
+  const totalGlobalCount = await getCountForKey(configSecrets.redis.prefix + ":total");
   // Get number of guilds/channels/users where the bot was used
-  const totalUniqueUsers = await getCountForSetKey(config.redis.prefix + ":users");
-  const totalUniqueGuilds = await getCountForSetKey(config.redis.prefix + ":guilds");
-  const totalUniqueChannels = await getCountForSetKey(config.redis.prefix + ":channels");
+  const totalUniqueUsers = await getCountForSetKey(configSecrets.redis.prefix + ":users");
+  const totalUniqueGuilds = await getCountForSetKey(configSecrets.redis.prefix + ":guilds");
+  const totalUniqueChannels = await getCountForSetKey(configSecrets.redis.prefix + ":channels");
   // Emit the message of the stats
   eventEmitter.emit("message", {
     id: counter++,

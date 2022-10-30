@@ -1,10 +1,10 @@
 import Redis from "ioredis";
-import {config} from "./Configuration";
+import {configSecrets} from "./ConfigurationSecrets";
 
 export const redis = new Redis({
-  host: config.redis.host,
-  port: config.redis.port,
-  password: config.redis.password
+  host: configSecrets.redis.host,
+  port: configSecrets.redis.port,
+  password: configSecrets.redis.password
 });
 
 export async function getAllKeysScan(pattern: string): Promise<string[]> {

@@ -110,7 +110,7 @@ const guildId = specifiedCommandArgs[1] || undefined;
   const response = await fetch("https://discord.com/api/v8/applications/" + configSecrets.discord.applicationId + guildUrlPart + "/commands", {
     method: "put",
     headers: {
-      "authorization": "Bot " + config.discord.token,
+      "authorization": "Bot " + configSecrets.discord.token,
       "content-type": "application/json"
     },
     body: JSON.stringify(commands)
