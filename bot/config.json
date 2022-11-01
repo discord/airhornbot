@@ -149,7 +149,19 @@
         "naur": "ah-naur-opus.ogg",
         "naurspam": "naurspam-opus.ogg",
         "naurjam": "naurjam-opus.ogg",
+        "lets-goar": "lets-goar.ogg",
+        "mjjj": "mjjj.ogg",
         "znaur": "znaur-opus.ogg"
+      }
+    },
+    "clogg": {
+      "name": "Clogg Memes",
+      "description": "Clogg It In The Meme",
+      "emoji": "847138944302055455",
+      "variants": {
+        "ys": "ys-opus.ogg",
+        "jambalaya": "jamba2-opus.ogg",
+        "and_god": "and_god.ogg"
       }
     },
     "birthday": {
