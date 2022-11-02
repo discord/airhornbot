@@ -161,7 +161,12 @@
       "variants": {
         "ys": "ys-opus.ogg",
         "jambalaya": "jamba2-opus.ogg",
-        "and_god": "and_god.ogg"
+        "and_god": "and_god.ogg",
+        "d-bigdirtyracoon": "david-bigdirtyracoon-opus.ogg",
+        "d-ew": "david-ew-opus.ogg",
+        "d-omgew": "david-omgew-opus.ogg",
+        "d-whatisthis": "david-whatisthis-opus.ogg",
+        "d-yay": "david-yay-opus.ogg"
       }
     },
     "birthday": {
