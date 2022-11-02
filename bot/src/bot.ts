@@ -40,6 +40,8 @@ export class AirhornBot {
     this.registerListener(new ReadyListener());
     // Register the commands
     const soundKeys = Object.keys(config.sounds);
+    console.log("soundKeys");
+    console.log(soundKeys);
     for (let i = 0; i < soundKeys.length; i++) {
       this.registerCommand(new AirhornCommand(soundKeys[i]));
     }
