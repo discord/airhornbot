@@ -166,7 +166,12 @@
         "d-ew": "david-ew-opus.ogg",
         "d-omgew": "david-omgew-opus.ogg",
         "d-whatisthis": "david-whatisthis-opus.ogg",
-        "d-yay": "david-yay-opus.ogg"
+        "d-yay": "david-yay-opus.ogg",
+        "p-trophy": "pat-doing-nothing-trophy.ogg",
+        "p-dont-do-that": "pat-dont-do-that.ogg",
+        "p-here-comes": "pat-here-comes.ogg",
+        "p-this-is-patrick": "pat-no-this-is-patrick.ogg",
+        "p-whats-that": "pat-whats-that.ogg"
       }
     },
     "birthday": {
