@@ -182,6 +182,13 @@
         "confetti": "birthday_confetti.ogg",
         "happy": "birthday_happy.ogg"
       }
+    },
+    "trombone": {
+      "name": "Trombone Hero",
+      "description": "Wah wah WAH WAH",
+      "variants": {
+        "Through the Fire and Flames": "ttfaf.ogg"
+      }
     }
   }
 }
