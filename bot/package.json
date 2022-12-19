@@ -13,7 +13,7 @@
     "lint": "eslint . --ext .ts,.tsx"
   },
   "devDependencies": {
-    "@types/express": "^4.17.13",
+    "@types/express": "^4.17.15",
     "@types/ioredis": "^4.26.4",
     "@types/node": "14.17.1",
     "@types/node-fetch": "^2.5.10",
@@ -27,7 +27,7 @@
     "@discordjs/opus": "^0.5.0",
     "discord.js-light": "^3.5.11",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "ioredis": "^4.27.9",
     "node-fetch": "^2.6.1"
   }
