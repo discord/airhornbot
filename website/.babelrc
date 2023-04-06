@@ -1,3 +1,11 @@
 {
-  "presets": ["react-static/babel-preset.js"]
+  "presets": [
+    "@babel/preset-env",
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic"
+      }
+    ]
+  ]
 }

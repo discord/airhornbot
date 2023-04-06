@@ -89,7 +89,6 @@
 @media (max-width: 690px) {
   .video-airhorn {
     max-width: 90%;
-    height: auto;
   }
 
   .firefox {
@@ -100,8 +99,8 @@
 
   .island {
     &.tree {
-      width: @width / 2;
-      height: @height / 2;
+      width: calc(@width / 2);
+      height: calc(@height / 2);
       background-size: @height @width;
       visibility: visible;
       opacity: 1;

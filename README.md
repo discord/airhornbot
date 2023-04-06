@@ -1,51 +1,54 @@
 # airhornbot
 
-A Node.js implementation of Airhorn Bot.
+A TypeScript implementation of AIRHORN SOLUTIONS.
 
 # Setup
 
 Prerequisites:
-- Redis Server
-- Yarn
+
+- Postgres Server
+- Node.js v18 (and npm)
 
 ## Website
 
-Build the website for usage.
+Build the website for the bot.
 
 Example commands:
-```
+
+```bash
 cd website
-yarn install
-yarn run build
+npm install
+cp .env.example .env
+# Edit the .env file to have the correct values for your setup
+npm run build
 ```
 
 ## Bot
 
-Build the bot and webserver process.
-
-Make sure to update/create `config.json`!
+Build the bot and web server process.
 
 Example commands:
-```
-cd bot
-yarn install
-yarn run build
-```
 
-To register the slash commands:
-```
+```bash
 cd bot
-yarn run register-commands
+npm install
+cp .env.example .env
+# Edit the .env file to have the correct values for your setup
+npx prisma generate
+npm run build
+npx prisma migrate deploy
 ```
 
 To run the bot:
-```
+
+```bash
 cd bot
-yarn run bot
+npm run bot
 ```
 
 To run the web server:
-```
+
+```bash
 cd bot
-yarn run web
+npm run web
 ```

@@ -1,34 +1,37 @@
 {
   "name": "airhornbot",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "author": "Discord",
+  "author": "Sky W",
   "license": "MIT",
-  "private": true,
+  "type": "module",
   "scripts": {
-    "register-commands": "node ./dist/register",
-    "bot": "node ./dist/bot",
-    "web": "node ./dist/web",
-    "build": "tsc --project ./tsconfig.json",
-    "lint": "eslint . --ext .ts,.tsx"
+    "build": "tsc --project tsconfig.json",
+    "bot": "node --enable-source-maps --experimental-specifier-resolution=node ./dist/bot.js",
+    "web": "node --enable-source-maps --experimental-specifier-resolution=node ./dist/web.js"
   },
   "devDependencies": {
-    "@types/express": "^4.17.13",
-    "@types/ioredis": "^4.26.4",
-    "@types/node": "14.17.1",
-    "@types/node-fetch": "^2.5.10",
-    "@types/ws": "^7.4.4",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "@typescript-eslint/parser": "^4.25.0",
-    "eslint": "^7.27.0",
-    "typescript": "^4.4.3"
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.3",
+    "prettier": "^2.8.4",
+    "prisma": "^4.12.0",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@discordjs/opus": "^0.5.0",
-    "discord.js-light": "^3.5.11",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "ioredis": "^4.27.9",
-    "node-fetch": "^2.6.1"
+    "@discordjs/opus": "^0.9.0",
+    "@discordjs/voice": "^0.15.0",
+    "@prisma/client": "^4.12.0",
+    "discord.js": "^14.8.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^6.15.0",
+    "libsodium-wrappers": "^0.7.11",
+    "queue": "^6.0.2",
+    "tslog": "^4.8.2",
+    "unicode-emoji": "^2.4.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

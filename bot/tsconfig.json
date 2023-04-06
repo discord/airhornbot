@@ -1,31 +1,16 @@
 {
   "compilerOptions": {
-    "lib": [
-      "ES6",
-      "ES2020"
-    ],
-    "target": "ES2019",
-    "module": "commonjs",
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "ESNext"],
+    "allowJs": true,
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
-    "strictPropertyInitialization": false,
     "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./types"
-    ]
-  },
-  "exclude": [
-    "node_modules",
-    "test",
-    "migrations"
-  ]
+    "downlevelIteration": true,
+    "inlineSourceMap": true,
+    "moduleResolution": "node"
+  }
 }

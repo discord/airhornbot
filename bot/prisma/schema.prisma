@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model SoundCommand {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  prettyName  String
+  description String
+  emoji       String?
+  disabled    Boolean @default(false)
+
+  sounds Sound[]
+}
+
+model Sound {
+  id             Int          @id @default(autoincrement())
+  soundCommandId Int
+  soundCommand   SoundCommand @relation(fields: [soundCommandId], references: [id])
+  name           String
+  emoji          String?
+  fileReference  String
+  disabled       Boolean      @default(false)
+
+  usages Usage[]
+}
+
+model Usage {
+  guildId   BigInt
+  channelId BigInt
+  userId    BigInt
+  user      User   @relation(fields: [userId], references: [id])
+  soundId   Int
+  sound     Sound  @relation(fields: [soundId], references: [id])
+  counter   BigInt @default(0)
+
+  @@unique([guildId, channelId, userId, soundId])
+}
+
+model User {
+  id            BigInt @unique
+  username      String
+  discriminator String
+  lastUpdate    BigInt
+
+  usages Usage[]
+}

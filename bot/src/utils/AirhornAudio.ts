@@ -1,157 +1,109 @@
-import {readFileSync} from "fs";
-import path from "path";
-import {Readable} from "stream";
-import {VoiceChannel, VoiceConnection} from "discord.js";
-import {config} from "./Configuration";
+import {
+  AudioPlayer,
+  AudioPlayerStatus,
+  createAudioPlayer,
+  createAudioResource,
+  entersState,
+  joinVoiceChannel,
+  StreamType,
+  VoiceConnection,
+  VoiceConnectionStatus,
+} from '@discordjs/voice';
+import { VoiceBasedChannel } from 'discord.js';
+import { log } from '../bot';
+import { addToCounterQueue, addToRepairGuildIdQueue, addToUserQueue, CounterQueueItem, UserQueueItem } from './QueueHandler';
 
-const audioBuffers: {
-  [key: string]: Buffer
-} = {};
+export const DEFAULT_AIRHORN_MAX_QUEUE_ITEMS = 3;
 
 type GuildQueueItem = {
-  voiceChannel: VoiceChannel,
-  soundFileName: string
+  soundFileReference: string;
+  counterQueueItem: CounterQueueItem;
+  userQueueItem: UserQueueItem;
 };
 
-const guildQueues = new Map<string, GuildQueueItem[]>();
+const guildQueues: Map<string, GuildQueueItem[]> = new Map();
 
-// Map of the sound name, with an inner map of the name of the variant and the sound file path
-const soundFiles = new Map<string, Map<string, string>>();
-// Map of the sound name, with the values being an array of the names of the variants for that sound
-export const soundVariants = new Map<string, string[]>();
-
-const soundsKeys = Object.keys(config.sounds);
-for (const soundKeysIndex in soundsKeys) {
-  const soundKey = soundsKeys[soundKeysIndex];
-  soundFiles.set(soundKey, new Map<string, string>());
-  soundVariants.set(soundKey, []);
-  const variants = config.sounds[soundKey].variants;
-  const variantsKeys = Object.keys(variants);
-  for (const variantKeysIndex in variantsKeys) {
-    const variantKey = variantsKeys[variantKeysIndex];
-    const variantFileName = variants[variantKey];
-    audioBuffers[soundKey + "/" + variantFileName] = readFileSync(path.join(__dirname, "..", "..", "sounds", soundKey, variantFileName));
-    soundFiles.get(soundKey)?.set(variantKey.toLowerCase(), soundKey + "/" + variantFileName);
-    soundVariants.get(soundKey)?.push(variantKey);
-  }
+export function getTotalItemsInGuildQueue(guildId: string): number {
+  return (guildQueues.get(guildId) || []).length;
 }
 
-function getGuildQueue(guildId: string): GuildQueueItem[] {
-  return guildQueues.get(guildId) || [];
+async function playSound(player: AudioPlayer, soundFileReference: string): Promise<unknown> {
+  const resource = createAudioResource(soundFileReference, {
+    inputType: StreamType.Arbitrary,
+  });
+  player.play(resource);
+  // Give it a maximum of 5 seconds to start playing, then another 5 seconds to finish
+  await entersState(player, AudioPlayerStatus.Playing, 5e3);
+  return entersState(player, AudioPlayerStatus.Idle, 5e3);
 }
 
-export function getSound(inputSoundName: string | null, inputSoundVariant?: string): {
-  sound: string;
-  variant: string;
-  variantFile: string;
-} | undefined {
-  // Choose sound
-  const soundsToPickFrom = (inputSoundName !== null && inputSoundName !== "random") ? [inputSoundName] : [...soundFiles.keys()];
-  const chosenSound = soundsToPickFrom[Math.floor(Math.random() * soundsToPickFrom.length)];
-  const soundVariants = soundFiles.get(chosenSound);
-  if (!soundVariants) {
-    return undefined;
-  }
-  // Choose variant
-  const variantsToPickFrom = inputSoundVariant ? [inputSoundVariant] : [...soundVariants.keys()];
-  const chosenVariant = variantsToPickFrom[Math.floor(Math.random() * variantsToPickFrom.length)];
-  const soundVariantFile = soundVariants.get(chosenVariant);
-  if (!soundVariantFile) {
-    return undefined;
-  }
-  return {
-    sound: chosenSound,
-    variant: chosenVariant,
-    variantFile: soundVariantFile
-  };
-}
-
-export async function enqueueSound(voiceChannel: VoiceChannel, soundFileName: string): Promise<void> {
-  // Make sure the server queue exists
-  if (!guildQueues.has(voiceChannel.guild.id)) {
-    guildQueues.set(voiceChannel.guild.id, []);
-  }
-  const guildQueue = getGuildQueue(voiceChannel.guild.id);
-  // Add the sound to the queue if the queue is less than the max
-  if (guildQueue.length < config.settings.maxQueueSize) {
-    guildQueue.push({
-      voiceChannel,
-      soundFileName
-    });
-  }
-  if (guildQueue.length < 2) {
-    playSound(voiceChannel.guild.id);
-  }
-}
-
-async function playSound(guildId: string): Promise<void> {
-  let voiceChannel: VoiceChannel | undefined;
+async function connectToChannel(channel: VoiceBasedChannel): Promise<VoiceConnection> {
+  const connection = joinVoiceChannel({
+    guildId: channel.guildId,
+    channelId: channel.id,
+    adapterCreator: channel.guild.voiceAdapterCreator,
+  });
   try {
-    // Loop through the queue
-    let connection: VoiceConnection | undefined;
-    const guildQueue = getGuildQueue(guildId);
-    while (guildQueue.length > 0) {
-      const itemFromQueue = guildQueue[0];
-      if (!connection || connection.channel.id !== itemFromQueue.voiceChannel.id) {
-        voiceChannel = itemFromQueue.voiceChannel;
-        connection = await voiceChannel.join();
+    await entersState(connection, VoiceConnectionStatus.Ready, 30e3);
+    return connection;
+  } catch (e) {
+    connection.destroy();
+    throw e;
+  }
+}
+
+export async function enqueSound(
+  channel: VoiceBasedChannel,
+  soundFileReference: string,
+  counterQueueItem: CounterQueueItem,
+  userQueueItem: UserQueueItem
+): Promise<void> {
+  log.trace('enqueSound', {
+    guildId: channel.guildId,
+    channelId: channel.id,
+    soundFileReference,
+  });
+  try {
+    // If there is no queue for the guild, let's start one
+    if (!guildQueues.has(channel.guildId)) {
+      guildQueues.set(channel.guildId, [
+        {
+          soundFileReference,
+          counterQueueItem,
+          userQueueItem,
+        },
+      ]);
+      const player = createAudioPlayer();
+      const connection = await connectToChannel(channel);
+      connection.subscribe(player);
+      while ((guildQueues.get(channel.guildId) || []).length > 0) {
+        // Play the queue until it is empty
+        const queueItem = (guildQueues.get(channel.guildId) || []).shift();
+        if (!queueItem) break;
+        await playSound(player, queueItem.soundFileReference);
+        // Repair the guild id
+        addToRepairGuildIdQueue({
+          guildId: queueItem.counterQueueItem.guildId,
+          channelId: queueItem.counterQueueItem.channelId,
+        });
+        // Count the usage
+        addToCounterQueue(queueItem.counterQueueItem);
+        // Update the user information in the database
+        addToUserQueue(queueItem.userQueueItem);
       }
-      // Play the sound from the queue
-      const dispatcher = connection.play(Readable.from(audioBuffers[itemFromQueue.soundFileName]), {
-        type: "ogg/opus",
-        volume: false
+      guildQueues.delete(channel.guildId);
+      connection.disconnect();
+    } else {
+      // Add the item to the queue if it already exists
+      guildQueues.get(channel.guildId)?.push({
+        soundFileReference,
+        counterQueueItem,
+        userQueueItem,
       });
-      // Wait until the sound finishes
-      await new Promise<void>(resolve => {
-        // The handler for when the dispatcher finishes
-        const finishHandler = () => {
-          dispatcher.off("finish", finishHandler);
-          if (connection) {
-            connection.off("disconnect", finishHandler);
-            connection.off("error", errorHandler);
-          }
-          resolve();
-        };
-        // The handler for connection errors
-        const errorHandler = (e: Error) => {
-          console.log(e);
-          if (voiceChannel) {
-            voiceChannel.leave();
-          }
-          dispatcher.off("finish", finishHandler);
-          if (connection) {
-            connection.off("disconnect", finishHandler);
-            connection.off("error", errorHandler);
-          }
-          connection = undefined;
-          resolve();
-        };
-        // On sound finish
-        dispatcher.on("finish", finishHandler);
-        if (connection) {
-          connection.on("disconnect", finishHandler);
-          connection.on("error", (e: Error) => {
-            console.log(e);
-            if (voiceChannel) {
-              voiceChannel.leave();
-            }
-            connection = undefined;
-            resolve();
-          });
-        }
-      });
-      guildQueue.shift();
-    }
-    // Remove the queue since we are done and leave the voice channel
-    guildQueues.delete(guildId);
-    if (voiceChannel) {
-      voiceChannel.leave();
     }
   } catch (e) {
-    console.error(e);
-    guildQueues.delete(guildId);
-    if (voiceChannel) {
-      voiceChannel.leave();
-    }
+    log.error(e);
+    // Delete the queue if we encountered an error
+    guildQueues.delete(channel.guildId);
   }
 }

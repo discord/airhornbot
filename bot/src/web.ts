@@ -1,41 +1,68 @@
-import * as http from "http";
-import express, {Application, Request, Response} from "express";
-import {apiEventsRouteHandler} from "./web/ApiEventsRoute";
-import {config} from "./utils/Configuration";
+import 'dotenv/config';
+import { PrismaClient } from '@prisma/client';
+import { ILogObj, Logger } from 'tslog';
+import express, { NextFunction, Request, Response } from 'express';
+import { Server as HttpServer } from 'http';
+import { apiEventsRouteHandler } from './routes/ApiEventsRoute';
+import { apiAdminRouter } from './routes/ApiAdminRouter';
+import { REST, RESTGetAPIOAuth2CurrentApplicationResult, Routes } from 'discord.js';
 
-export class AirhornWeb {
+export const log: Logger<ILogObj> = new Logger({
+  minLevel: parseInt(process.env.MIN_LOG_LEVEL || '3', 10), // 3 is info, 2 is debug
+  hideLogPositionForProduction: true,
+});
 
-  public readonly expressApplication: Application;
-  public readonly httpServer: http.Server;
+// Handle all uncaught exceptions
+process.on('uncaughtException', function (e) {
+  log.error(e);
+});
 
-  constructor() {
-    this.expressApplication = express();
-    this.expressApplication.disable("x-powered-by");
-    this.httpServer = new http.Server(this.expressApplication);
-    // Register the routes
-    this.expressApplication.get("/api/events", apiEventsRouteHandler);
-    if (config.web.hostStatic) {
-      // Serve the static files for the site if enabled
-      this.expressApplication.use(express.static(config.web.staticDirectory));
-    }
-    // Send a 404 when the path is not found.
-    this.expressApplication.use(((req: Request, res: Response) => {
-      res.status(404).header("content-type", "text/plain").send("404: Not Found");
-    }));
-  }
+// Create the Discord REST client
+export const discordRestClient = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
+export let discordApplicationInformation: RESTGetAPIOAuth2CurrentApplicationResult | undefined = undefined;
 
-  async start(): Promise<void> {
-    this.httpServer.listen(config.web.port, () => {
-      console.log("Web server is now listening on " + config.web.port);
-    });
-  }
+export const expressApplication = express();
+expressApplication.disable('x-powered-by');
+const httpServer: HttpServer = new HttpServer(expressApplication);
+// A little bit of fun (John Wick is a great movie)
+expressApplication.use(function (_, res: Response, next: NextFunction) {
+  res.setHeader('x-powered-by', 'Airhorns...lots of airhorns');
+  next();
+});
+expressApplication.use(express.json());
+
+expressApplication.get('/api/events', apiEventsRouteHandler);
+expressApplication.use('/api/admin', apiAdminRouter);
+
+if (process.env.WEB_HOST_STATIC === 'true') {
+  expressApplication.use(express.static(process.env.WEB_HOST_STATIC_DIRECTORY || '../website/build'));
 }
 
-(async () => {
-  const airhornWeb = new AirhornWeb();
-  try {
-    await airhornWeb.start();
-  } catch (e) {
-    console.error(e);
-  }
-})();
+expressApplication.use((_, res: Response) => {
+  res.status(404).header('content-type', 'text/plain').send('404: Not Found');
+});
+expressApplication.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  log.error(err.stack);
+  res.status(500).header('content-type', 'text/plain').send('500: Internal Server Error');
+});
+
+export const prismaClient = new PrismaClient();
+
+async function main() {
+  discordApplicationInformation = (await discordRestClient.get(
+    Routes.oauth2CurrentApplication()
+  )) as RESTGetAPIOAuth2CurrentApplicationResult;
+  log.info(`Using Discord application ${discordApplicationInformation.name} (${discordApplicationInformation.id}).`);
+  const portToListenOn = parseInt(process.env.WEB_PORT || '3000', 10);
+  httpServer.listen(portToListenOn, () => {
+    log.info(`Web server is now listening on ${portToListenOn}.`);
+  });
+}
+
+main()
+  .catch((e) => {
+    throw e;
+  })
+  .finally(async () => {
+    await prismaClient.$disconnect();
+  });
