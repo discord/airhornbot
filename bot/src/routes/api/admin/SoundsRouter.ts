@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { prismaClient } from '../../../web';
 import { body, param, query, validationResult } from 'express-validator';
-import { validateEmoji } from '../../../utils/EmojiValidator';
+import { validateEmoji } from '../../../utils/EmojiValidator.js';
+import { prismaClient } from '../../../web.js';
 
 export const soundsRouter = express.Router();
 

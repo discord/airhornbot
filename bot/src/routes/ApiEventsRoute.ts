@@ -1,7 +1,7 @@
-import { EventEmitter } from 'events';
-import { NextFunction, Request, Response } from 'express';
-import { expressApplication, prismaClient } from '../web';
 import { Prisma } from '@prisma/client';
+import { EventEmitter } from 'events';
+import { Request, Response } from 'express';
+import { prismaClient } from '../web.js';
 
 let counter = 0;
 

@@ -1,5 +1,5 @@
 import { CloseEvent } from 'discord.js';
-import { log } from '../../bot';
+import { log } from '../../bot.js';
 
 export function shardReadyListener(shardId: number): void {
   log.info(`Shard ID ${shardId} is ready.`);

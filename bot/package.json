@@ -9,8 +9,8 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "bot": "node --enable-source-maps --experimental-specifier-resolution=node ./dist/bot.js",
-    "web": "node --enable-source-maps --experimental-specifier-resolution=node ./dist/web.js"
+    "bot": "node --enable-source-maps ./dist/bot.js",
+    "web": "node --enable-source-maps ./dist/web.js"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
@@ -28,7 +28,7 @@
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
     "libsodium-wrappers": "^0.7.11",
-    "queue": "^6.0.2",
+    "queue": "github:jessetane/queue#d189671630450c7dc33eb6ce16988808ef1d3b80",
     "tslog": "^4.8.2",
     "unicode-emoji": "^2.4.0"
   },

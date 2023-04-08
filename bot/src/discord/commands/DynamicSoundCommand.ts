@@ -7,9 +7,9 @@ import {
   MessageActionRowComponentBuilder,
   PermissionFlagsBits,
 } from 'discord.js';
-import { prismaClient } from '../../bot';
-import { DEFAULT_AIRHORN_MAX_QUEUE_ITEMS, enqueSound, getTotalItemsInGuildQueue } from '../../utils/AirhornAudio';
-import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand';
+import { prismaClient } from '../../bot.js';
+import { DEFAULT_AIRHORN_MAX_QUEUE_ITEMS, enqueSound, getTotalItemsInGuildQueue } from '../../utils/AirhornAudio.js';
+import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
 
 export class DynamicSoundCommand extends DiscordChatInputCommand {
   constructor() {

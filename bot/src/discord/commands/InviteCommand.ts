@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction } from 'discord.js';
-import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand';
+import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
 
 export class InviteCommand extends DiscordChatInputCommand {
   constructor() {

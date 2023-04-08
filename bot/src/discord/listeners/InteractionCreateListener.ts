@@ -1,13 +1,13 @@
 import { Client, Interaction } from 'discord.js';
-import { PlaySoundButton } from '../buttons/PlaySoundButton';
-import { DynamicSoundCommand } from '../commands/DynamicSoundCommand';
-import { InviteCommand } from '../commands/InviteCommand';
-import { StatsCommand } from '../commands/StatsCommand';
-import { DiscordButton } from '../types/DiscordButton';
-import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand';
-import { prismaClient } from '../../bot';
-import { generateRegisterCommandsBody } from '../../utils/RegisterCommandsUtils';
-import { SoundboardCommand } from '../commands/SoundboardCommand';
+import { prismaClient } from '../../bot.js';
+import { generateRegisterCommandsBody } from '../../utils/RegisterCommandsUtils.js';
+import { PlaySoundButton } from '../buttons/PlaySoundButton.js';
+import { DynamicSoundCommand } from '../commands/DynamicSoundCommand.js';
+import { InviteCommand } from '../commands/InviteCommand.js';
+import { SoundboardCommand } from '../commands/SoundboardCommand.js';
+import { StatsCommand } from '../commands/StatsCommand.js';
+import { DiscordButton } from '../types/DiscordButton.js';
+import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
 
 const globalChatInputCommandMap = new Map<string, DiscordChatInputCommand>();
 const buttonMap = new Map<string, DiscordButton>();

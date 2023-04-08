@@ -1,7 +1,7 @@
 import { ButtonInteraction, PermissionFlagsBits } from 'discord.js';
-import { prismaClient } from '../../bot';
-import { DEFAULT_AIRHORN_MAX_QUEUE_ITEMS, enqueSound, getTotalItemsInGuildQueue } from '../../utils/AirhornAudio';
-import { DiscordButton } from '../types/DiscordButton';
+import { prismaClient } from '../../bot.js';
+import { DEFAULT_AIRHORN_MAX_QUEUE_ITEMS, enqueSound, getTotalItemsInGuildQueue } from '../../utils/AirhornAudio.js';
+import { DiscordButton } from '../types/DiscordButton.js';
 
 export class PlaySoundButton extends DiscordButton {
   constructor() {

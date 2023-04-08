@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { soundsRouter } from './api/admin/SoundsRouter';
-import { soundCommandsRouter } from './api/admin/SoundCommandsRouter';
-import { registerCommandsRouter } from './api/admin/RegisterCommandsRouter';
+import { registerCommandsRouter } from './api/admin/RegisterCommandsRouter.js';
+import { soundCommandsRouter } from './api/admin/SoundCommandsRouter.js';
+import { soundsRouter } from './api/admin/SoundsRouter.js';
 
 export const apiAdminRouter = express.Router();
 

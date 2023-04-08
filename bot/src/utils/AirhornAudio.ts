@@ -10,8 +10,8 @@ import {
   VoiceConnectionStatus,
 } from '@discordjs/voice';
 import { VoiceBasedChannel } from 'discord.js';
-import { log } from '../bot';
-import { addToCounterQueue, addToRepairGuildIdQueue, addToUserQueue, CounterQueueItem, UserQueueItem } from './QueueHandler';
+import { log } from '../bot.js';
+import { addToCounterQueue, addToRepairGuildIdQueue, addToUserQueue, CounterQueueItem, UserQueueItem } from './QueueHandler.js';
 
 export const DEFAULT_AIRHORN_MAX_QUEUE_ITEMS = 3;
 

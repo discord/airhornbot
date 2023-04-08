@@ -1,11 +1,11 @@
-import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-import { ILogObj, Logger } from 'tslog';
+import { REST, RESTGetAPIOAuth2CurrentApplicationResult, Routes } from 'discord.js';
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import { Server as HttpServer } from 'http';
-import { apiEventsRouteHandler } from './routes/ApiEventsRoute';
-import { apiAdminRouter } from './routes/ApiAdminRouter';
-import { REST, RESTGetAPIOAuth2CurrentApplicationResult, Routes } from 'discord.js';
+import { ILogObj, Logger } from 'tslog';
+import { apiAdminRouter } from './routes/ApiAdminRouter.js';
+import { apiEventsRouteHandler } from './routes/ApiEventsRoute.js';
 
 export const log: Logger<ILogObj> = new Logger({
   minLevel: parseInt(process.env.MIN_LOG_LEVEL || '3', 10), // 3 is info, 2 is debug

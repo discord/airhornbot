@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ES2022",
+    "module": "Node16",
     "lib": ["ES2022", "ESNext"],
-    "allowJs": true,
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
     "noImplicitAny": true,
-    "esModuleInterop": true,
-    "downlevelIteration": true,
     "inlineSourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node16",
+    "skipLibCheck": true
   }
 }

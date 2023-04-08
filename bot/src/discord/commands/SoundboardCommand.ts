@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction } from 'discord.js';
-import { prismaClient } from '../../bot';
-import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand';
-import { convertButtonsIntoButtonGrid } from '../../utils/InteractionUtilts';
+import { prismaClient } from '../../bot.js';
+import { convertButtonsIntoButtonGrid } from '../../utils/InteractionUtilts.js';
+import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
 
 export class SoundboardCommand extends DiscordChatInputCommand {
   constructor() {

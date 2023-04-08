@@ -1,5 +1,5 @@
 import Queue, { QueueWorkerCallback } from 'queue';
-import { prismaClient } from '../bot';
+import { prismaClient } from '../bot.js';
 
 const databaseQueue = new Queue({
   concurrency: 1, // This should be set to 1 to avoid race conditions

@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction } from 'discord.js';
-import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand';
-import { prismaClient } from '../../bot';
+import { prismaClient } from '../../bot.js';
+import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
 
 export class StatsCommand extends DiscordChatInputCommand {
   constructor() {

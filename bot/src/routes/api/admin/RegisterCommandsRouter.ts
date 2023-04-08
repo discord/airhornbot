@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
-import { discordApplicationInformation, discordRestClient, log, prismaClient } from '../../../web';
 import { Routes } from 'discord.js';
-import { generateRegisterCommandsBody } from '../../../utils/RegisterCommandsUtils';
+import express, { Request, Response } from 'express';
+import { generateRegisterCommandsBody } from '../../../utils/RegisterCommandsUtils.js';
+import { discordApplicationInformation, discordRestClient, log, prismaClient } from '../../../web.js';
 
 export const registerCommandsRouter = express.Router();
 

@@ -1,16 +1,15 @@
-import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import { ActivityType, Client, GatewayIntentBits } from 'discord.js';
-import { interactionCreateListener } from './discord/listeners/InteractionCreateListener';
-import { readyListener } from './discord/listeners/ReadyListener';
-import { Logger } from 'tslog';
-import { ILogObj } from 'tslog/dist/types/interfaces';
+import 'dotenv/config';
+import { ILogObj, Logger } from 'tslog';
+import { interactionCreateListener } from './discord/listeners/InteractionCreateListener.js';
+import { readyListener } from './discord/listeners/ReadyListener.js';
 import {
   shardDisconnectListener,
   shardReadyListener,
   shardReconnectingListener,
   shardResumeListener,
-} from './discord/listeners/ShardListener';
+} from './discord/listeners/ShardListener.js';
 
 export const log: Logger<ILogObj> = new Logger({
   minLevel: parseInt(process.env.MIN_LOG_LEVEL || '3', 10), // 3 is info, 2 is debug
