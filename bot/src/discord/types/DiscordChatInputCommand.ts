@@ -7,5 +7,5 @@ export abstract class DiscordChatInputCommand {
     this.commandConfiguration = commandConfiguration;
   }
 
-  abstract handle(commandInteraction: CommandInteraction): Promise<unknown>;
+  abstract handle(commandInteraction: CommandInteraction): Promise<void>;
 }

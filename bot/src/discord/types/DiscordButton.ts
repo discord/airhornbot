@@ -14,5 +14,5 @@ export abstract class DiscordButton {
     this.buttonConfiguration = buttonConfiguration;
   }
 
-  abstract handle(buttonInteraction: ButtonInteraction): Promise<unknown>;
+  abstract handle(buttonInteraction: ButtonInteraction): Promise<void>;
 }

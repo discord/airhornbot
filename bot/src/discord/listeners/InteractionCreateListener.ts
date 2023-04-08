@@ -38,7 +38,7 @@ export async function interactionCreateListener(interaction: Interaction): Promi
       return;
     }
     try {
-      discordCommand.handle(interaction);
+      await discordCommand.handle(interaction);
     } catch (e) {
       console.error(`The command ${discordCommand.commandConfiguration.name} encountered an error while running.`, e);
     }

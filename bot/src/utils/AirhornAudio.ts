@@ -27,14 +27,14 @@ export function getTotalItemsInGuildQueue(guildId: string): number {
   return (guildQueues.get(guildId) || []).length;
 }
 
-async function playSound(player: AudioPlayer, soundFileReference: string): Promise<unknown> {
+async function playSound(player: AudioPlayer, soundFileReference: string): Promise<void> {
   const resource = createAudioResource(soundFileReference, {
     inputType: StreamType.Arbitrary,
   });
   player.play(resource);
   // Give it a maximum of 5 seconds to start playing, then another 5 seconds to finish
   await entersState(player, AudioPlayerStatus.Playing, 5e3);
-  return entersState(player, AudioPlayerStatus.Idle, 5e3);
+  await entersState(player, AudioPlayerStatus.Idle, 5e3);
 }
 
 async function connectToChannel(channel: VoiceBasedChannel): Promise<VoiceConnection> {

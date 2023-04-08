@@ -10,7 +10,7 @@ export class StatsCommand extends DiscordChatInputCommand {
     });
   }
 
-  async handle(commandInteraction: ChatInputCommandInteraction): Promise<unknown> {
+  async handle(commandInteraction: ChatInputCommandInteraction): Promise<void> {
     await commandInteraction.deferReply();
     const lines = ['**Statistics**'];
     const totalUsages = await prismaClient.usage.aggregate({

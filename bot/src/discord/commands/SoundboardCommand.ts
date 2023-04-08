@@ -18,12 +18,13 @@ export class SoundboardCommand extends DiscordChatInputCommand {
     });
   }
 
-  async handle(commandInteraction: ChatInputCommandInteraction): Promise<unknown> {
+  async handle(commandInteraction: ChatInputCommandInteraction): Promise<void> {
     if (!commandInteraction.member || !commandInteraction.guildId) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'You cannot trigger the bot in a direct message.',
         ephemeral: true,
       });
+      return;
     }
     // Get the sound command
     const soundCommand = await prismaClient.soundCommand.findFirst({
@@ -32,16 +33,18 @@ export class SoundboardCommand extends DiscordChatInputCommand {
       },
     });
     if (!soundCommand) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'The sound command requested was not found.',
         ephemeral: true,
       });
+      return;
     }
     if (soundCommand.disabled) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'The sound command requested is currently disabled.',
         ephemeral: true,
       });
+      return;
     }
     // Find the sound variants for the command
     const soundsForSoundCommand = await prismaClient.sound.findMany({
@@ -51,10 +54,11 @@ export class SoundboardCommand extends DiscordChatInputCommand {
       },
     });
     if (soundsForSoundCommand.length === 0) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'No sounds were found for the command requested.',
         ephemeral: true,
       });
+      return;
     }
     const buttons: ButtonBuilder[] = [];
     for (let soundVariant of soundsForSoundCommand) {

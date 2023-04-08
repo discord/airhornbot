@@ -26,26 +26,29 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     });
   }
 
-  async handle(commandInteraction: ChatInputCommandInteraction): Promise<unknown> {
+  async handle(commandInteraction: ChatInputCommandInteraction): Promise<void> {
     if (!commandInteraction.member || !commandInteraction.guildId) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'You cannot trigger the bot in a direct message.',
         ephemeral: true,
       });
+      return;
     }
     if (!commandInteraction.guild) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'The bot must be in the server, try to re-invite it.',
         ephemeral: true,
       });
+      return;
     }
     // Get the bot member in the guild
     const botGuildMember = commandInteraction.guild.members.me;
     if (!botGuildMember) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'The bot was not found in the server.',
         ephemeral: true,
       });
+      return;
     }
     // Find the sound command
     const soundCommand = await prismaClient.soundCommand.findFirst({
@@ -54,16 +57,18 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
       },
     });
     if (!soundCommand) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'No sound was found for this command.',
         ephemeral: true,
       });
+      return;
     }
     if (soundCommand.disabled) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'The sound command requested is disabled.',
         ephemeral: true,
       });
+      return;
     }
     // Find the sound variants for the command
     const soundsForSoundCommand = await prismaClient.sound.findMany({
@@ -73,48 +78,53 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
       },
     });
     if (soundsForSoundCommand.length === 0) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'No sounds were found for the command requested.',
         ephemeral: true,
       });
+      return;
     }
     let selectedVariant = soundsForSoundCommand[Math.floor(Math.random() * soundsForSoundCommand.length)];
     // Check to see if a sound variant is specified (if it is, set the selected variant to the correct one)
     const variantOption = commandInteraction.options.getInteger('variant', false);
-    if (variantOption !== null) {
+    if (!variantOption) {
       const foundVariant = soundsForSoundCommand.filter((sound) => sound.id === variantOption)[0] || undefined;
       if (foundVariant) {
         selectedVariant = foundVariant;
       }
     }
     // If it is disabled or missing
-    if (variantOption !== null && variantOption !== selectedVariant.id) {
-      return commandInteraction.reply({
+    if (!variantOption && variantOption !== selectedVariant.id) {
+      await commandInteraction.reply({
         content: 'The sound requested was not found.',
         ephemeral: true,
       });
+      return;
     }
     const voiceState = commandInteraction.guild.voiceStates.cache.get(commandInteraction.user.id);
     if (!voiceState || !voiceState.channel) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'You need to be in a voice channel to run this command.',
         ephemeral: true,
       });
+      return;
     }
     if (!botGuildMember.permissionsIn(voiceState.channel).has(PermissionFlagsBits.Connect)) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'The bot does not have permissions to connect to the voice channel.',
         ephemeral: true,
       });
+      return;
     }
     if (
       getTotalItemsInGuildQueue(commandInteraction.guildId) >
       parseInt(process.env.AIRHORN_MAX_QUEUE_ITEMS || `${DEFAULT_AIRHORN_MAX_QUEUE_ITEMS}`, 10)
     ) {
-      return commandInteraction.reply({
+      await commandInteraction.reply({
         content: 'Too many items are in the queue! Try again in a moment.',
         ephemeral: true,
       });
+      return;
     }
     // Queue the sound to play in the guild
     enqueSound(

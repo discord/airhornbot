@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "author": "Sky W",
+  "author": "Discord",
   "license": "MIT",
   "type": "module",
+  "private": true,
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc",
     "bot": "node --enable-source-maps --experimental-specifier-resolution=node ./dist/bot.js",
     "web": "node --enable-source-maps --experimental-specifier-resolution=node ./dist/web.js"
   },
