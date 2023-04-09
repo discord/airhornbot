@@ -1,24 +1,24 @@
-import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class';
+import { BrowserInfo } from 'detect-browser';
+import Parallax from 'parallax-js';
+import ReactDOM from 'react-dom';
+import { Tooltip } from 'react-tooltip';
+import Constants from '../Constants';
 import AirhornStatsStore from '../stores/AirhornStatsStore';
+import '../style/style.styl';
 import Cloud from './Cloud';
-import IslandPond from './islands/IslandPond';
-import IslandTree from './islands/IslandTree';
-import IslandTrees from './islands/IslandTrees';
-import IslandTent from './islands/IslandTent';
-import IslandDoubleTree from './islands/IslandDoubleTree';
-import IslandForest from './islands/IslandForest';
-import IslandLog from './islands/IslandLog';
-import IslandShrooms from './islands/IslandShrooms';
-import IslandSmall from './islands/IslandSmall';
 import Content from './Content';
 import Footer from './Footer';
 import StatsPanel from './StatsPanel';
-import Parallax from 'parallax-js';
-import { Tooltip } from 'react-tooltip';
-import { BrowserInfo } from 'detect-browser';
-import Constants from '../Constants';
-import '../style/style.styl';
+import IslandDoubleTree from './islands/IslandDoubleTree';
+import IslandForest from './islands/IslandForest';
+import IslandLog from './islands/IslandLog';
+import IslandPond from './islands/IslandPond';
+import IslandShrooms from './islands/IslandShrooms';
+import IslandSmall from './islands/IslandSmall';
+import IslandTent from './islands/IslandTent';
+import IslandTree from './islands/IslandTree';
+import IslandTrees from './islands/IslandTrees';
 
 const REF_PARALLAX = 'PARALLAX_REF';
 const REF_SMALL_ISLANDS = 'SMALL_ISLANDS_REF';
@@ -40,7 +40,7 @@ type State = {
 
 let changeCountTimeout: NodeJS.Timeout;
 
-function isVisible(el, num): boolean {
+function isVisible(el): boolean {
   const rect = el.getBoundingClientRect();
   return (
     ((rect.top >= -20 && rect.top <= window.innerHeight) || (rect.bottom >= -20 && rect.bottom <= window.innerHeight)) &&
@@ -90,13 +90,13 @@ const Layout = createReactClass({
   resized() {
     const pausedSmallIslands = [];
     for (let i = 0; i < Constants.SMALL_ISLAND_COUNT; i++) {
-      const visible = isVisible(this.refs[REF_SMALL_ISLANDS].children[i], i);
+      const visible = isVisible(this.refs[REF_SMALL_ISLANDS].children[i]);
       pausedSmallIslands.push(!visible);
     }
 
     const pausedLargeIslands = [];
     for (let i = 0; i < Constants.LARGE_ISLAND_COUNT; i++) {
-      const visible = isVisible(this.refs[REF_LARGE_ISLANDS].children[i], i);
+      const visible = isVisible(this.refs[REF_LARGE_ISLANDS].children[i]);
       pausedLargeIslands.push(!visible);
     }
 

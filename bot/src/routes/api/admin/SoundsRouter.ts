@@ -16,7 +16,7 @@ soundsRouter.get(
     if (!result.isEmpty()) {
       return res.status(400).json({ errors: result.array() });
     }
-    let offset = parseInt((req.query.offset || '0') as string, 10);
+    const offset = parseInt((req.query.offset || '0') as string, 10);
     const sounds = await prismaClient.sound.findMany({
       take: 10,
       skip: offset,
@@ -98,7 +98,7 @@ soundsRouter.post('/', async (req: Request, res: Response) => {
         return true;
       }),
   ];
-  for (let validation of validations) {
+  for (const validation of validations) {
     const result = await validation.run(req);
     if (!result.isEmpty()) {
       return res.status(400).json({ errors: result.array() });
@@ -137,7 +137,7 @@ soundsRouter.get(
     });
     const validations = [
       param('soundId')
-        .custom((_value: string) => {
+        .custom(() => {
           if (!sound) {
             throw new Error();
           }
@@ -145,7 +145,7 @@ soundsRouter.get(
         })
         .withMessage('The sound was not found.'),
     ];
-    for (let validation of validations) {
+    for (const validation of validations) {
       const result = await validation.run(req);
       if (!result.isEmpty()) {
         return res.status(400).json({ errors: result.array() });
@@ -171,7 +171,7 @@ soundsRouter.patch(
     // Validate the body sequentually since we rely on previously validated fields for some checks (ex. name needs soundCommandId)
     const validations = [
       param('soundId')
-        .custom((_value: string) => {
+        .custom(() => {
           if (!sound) {
             throw new Error();
           }
@@ -257,7 +257,7 @@ soundsRouter.patch(
         strict: true,
       }),
     ];
-    for (let validation of validations) {
+    for (const validation of validations) {
       const result = await validation.run(req);
       if (!result.isEmpty()) {
         return res.status(400).json({ errors: result.array() });

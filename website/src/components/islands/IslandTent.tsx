@@ -5,8 +5,8 @@ export default createReactClass({
   mixins: [ResizableSVG],
 
   render() {
-    let viewBox: string = this.getViewBox(259, 228);
-    let { paused } = this.props;
+    const viewBox: string = this.getViewBox(259, 228);
+    const { paused } = this.props;
 
     return (
       <svg

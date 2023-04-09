@@ -61,7 +61,7 @@ export class SoundboardCommand extends DiscordChatInputCommand {
       return;
     }
     const buttons: ButtonBuilder[] = [];
-    for (let soundVariant of soundsForSoundCommand) {
+    for (const soundVariant of soundsForSoundCommand) {
       // Determine the emoji
       let chosenEmoji = undefined;
       if (soundCommand.emoji) {

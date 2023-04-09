@@ -35,8 +35,8 @@ export class PlaySoundButton extends DiscordButton {
       return;
     }
     const customId = JSON.parse(buttonInteraction.customId);
-    let soundCommandId: number = customId.soundCommandId;
-    let soundId: number | undefined = customId.soundId;
+    const soundCommandId: number = customId.soundCommandId;
+    const soundId: number | undefined = customId.soundId;
     if (!soundCommandId && !soundId) {
       await buttonInteraction.reply({
         content: 'No sound or sound command was set for this button.',

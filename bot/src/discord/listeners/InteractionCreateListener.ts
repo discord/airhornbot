@@ -55,7 +55,7 @@ export async function interactionCreateListener(interaction: Interaction): Promi
       });
       return;
     }
-    let discordButton = buttonMap.get(customIdParsed.name);
+    const discordButton = buttonMap.get(customIdParsed.name);
     if (!discordButton) {
       await interaction.reply({
         content: 'The button requested was not found.',

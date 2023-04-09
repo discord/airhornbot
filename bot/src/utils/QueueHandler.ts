@@ -24,7 +24,7 @@ export type UserQueueItem = {
   discriminator: string;
 };
 
-function reapirGuildIdItemProcess(job: ReapirGuildIdItem, callback: QueueWorkerCallback) {
+function reapirGuildIdItemProcess(job: ReapirGuildIdItem, callback?: QueueWorkerCallback) {
   prismaClient.usage
     .updateMany({
       where: {
@@ -35,17 +35,19 @@ function reapirGuildIdItemProcess(job: ReapirGuildIdItem, callback: QueueWorkerC
       },
     })
     .then(() => {
-      callback();
+      if (callback) {
+        callback();
+      }
     });
 }
 
 export function addToRepairGuildIdQueue(reapirGuildIdItem: ReapirGuildIdItem) {
   databaseQueue.push((callback) => {
-    reapirGuildIdItemProcess(reapirGuildIdItem, callback!);
+    reapirGuildIdItemProcess(reapirGuildIdItem, callback);
   });
 }
 
-function counterQueueItemProcess(job: CounterQueueItem, callback: QueueWorkerCallback) {
+function counterQueueItemProcess(job: CounterQueueItem, callback?: QueueWorkerCallback) {
   prismaClient.usage
     .upsert({
       where: {
@@ -86,17 +88,19 @@ function counterQueueItemProcess(job: CounterQueueItem, callback: QueueWorkerCal
       },
     })
     .then(() => {
-      callback();
+      if (callback) {
+        callback();
+      }
     });
 }
 
 export function addToCounterQueue(counterQueueItem: CounterQueueItem) {
   databaseQueue.push((callback) => {
-    counterQueueItemProcess(counterQueueItem, callback!);
+    counterQueueItemProcess(counterQueueItem, callback);
   });
 }
 
-function userQueueItemProcess(job: UserQueueItem, callback: QueueWorkerCallback) {
+function userQueueItemProcess(job: UserQueueItem, callback?: QueueWorkerCallback) {
   prismaClient.user
     .upsert({
       where: {
@@ -115,12 +119,14 @@ function userQueueItemProcess(job: UserQueueItem, callback: QueueWorkerCallback)
       },
     })
     .then(() => {
-      callback();
+      if (callback) {
+        callback();
+      }
     });
 }
 
 export function addToUserQueue(userQueueItem: UserQueueItem) {
   databaseQueue.push((callback) => {
-    userQueueItemProcess(userQueueItem, callback!);
+    userQueueItemProcess(userQueueItem, callback);
   });
 }

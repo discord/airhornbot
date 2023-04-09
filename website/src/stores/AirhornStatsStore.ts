@@ -14,17 +14,17 @@ class AirhornStatsStore extends EventEmitter {
     super();
 
     if (EventSource) {
-      let eventSource = new EventSource('/api/events');
+      const eventSource = new EventSource('/api/events');
       eventSource.onmessage = this.receivedMessage.bind(this);
     }
   }
 
   fakeData() {
     setInterval(() => {
-      let countRnd = Math.random();
-      let uniqueUsersRnd = Math.random();
-      let uniqueGuildsRnd = Math.random();
-      let uniqueChannelsRnd = Math.random();
+      const countRnd = Math.random();
+      const uniqueUsersRnd = Math.random();
+      const uniqueGuildsRnd = Math.random();
+      const uniqueChannelsRnd = Math.random();
 
       this.receivedMessage({
         data: JSON.stringify({
@@ -44,7 +44,7 @@ class AirhornStatsStore extends EventEmitter {
   }
 
   receivedMessage(event) {
-    let data: MessageEventData = JSON.parse(event.data);
+    const data: MessageEventData = JSON.parse(event.data);
     count = data.total || 0;
     uniqueUsers = data.unique_users || 0;
     uniqueGuilds = data.unique_guilds || 0;

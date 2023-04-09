@@ -17,8 +17,13 @@ process.on('uncaughtException', function (e) {
   log.error(e);
 });
 
+const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
+if (!DISCORD_TOKEN) {
+  throw new Error('The DISCORD_TOKEN environment variable is not set.');
+}
+
 // Create the Discord REST client
-export const discordRestClient = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN!);
+export const discordRestClient = new REST({ version: '10' }).setToken(DISCORD_TOKEN);
 export let discordApplicationInformation: RESTGetAPIOAuth2CurrentApplicationResult | undefined = undefined;
 
 export const expressApplication = express();
@@ -41,7 +46,7 @@ if (process.env.WEB_HOST_STATIC === 'true') {
 expressApplication.use((_, res: Response) => {
   res.status(404).header('content-type', 'text/plain').send('404: Not Found');
 });
-expressApplication.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+expressApplication.use((err: Error, _req: Request, res: Response) => {
   log.error(err.stack);
   res.status(500).header('content-type', 'text/plain').send('500: Internal Server Error');
 });

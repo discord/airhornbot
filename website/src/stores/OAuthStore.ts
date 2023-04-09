@@ -10,7 +10,7 @@ class OAuthStore extends EventEmitter {
   constructor() {
     super();
 
-    let keyToSuccess = queryString.parse(window.location.search).key_to_success;
+    const keyToSuccess = queryString.parse(window.location.search).key_to_success;
     if (keyToSuccess == '1') {
       this.redirectedFromOAuth(true);
     } else if (keyToSuccess == '0') {
