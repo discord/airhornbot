@@ -35,7 +35,7 @@
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
     "libsodium-wrappers": "^0.7.11",
-    "queue": "github:jessetane/queue#d189671630450c7dc33eb6ce16988808ef1d3b80",
+    "queue": "^7.0.0",
     "tslog": "^4.8.2",
     "unicode-emoji": "^2.4.0"
   },
