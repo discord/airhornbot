@@ -2,7 +2,14 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 140,
+        "proseWrap": "preserve",
+        "singleQuote": true
+      }
+    ]
   },
   "extends": [
     "eslint:recommended",
