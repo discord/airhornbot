@@ -5,12 +5,24 @@
 import { EventEmitter } from 'events';
 
 class Dispatcher extends EventEmitter {
-  subscribe(listener) {
-    this.on('dispatched', listener);
+  constructor() {
+    super();
+    this.callbacks = [];
   }
 
-  dispatch(data: unknown) {
-    this.emit('dispatched', data);
+  register(callback) {
+    this.callbacks.push(callback);
+    return this.callbacks.length - 1;
+  }
+
+  unregister(id) {
+    this.callbacks.splice(id, 1);
+  }
+
+  dispatch(action) {
+    this.callbacks.forEach((callback) => {
+      callback(action);
+    });
   }
 }
 
