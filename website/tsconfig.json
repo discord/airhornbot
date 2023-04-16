@@ -1,6 +1,16 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "esModuleInterop": true
-  }
+    "target": "es6", // specify the ECMAScript version to target
+    "module": "commonjs", // specify the module system to use
+    "jsx": "react-jsx", // specify the syntax for JSX
+    "strict": true, // enable all strict type checking options
+    "esModuleInterop": true, // enable true interoperability between CommonJS and ES Modules
+    "forceConsistentCasingInFileNames": true // ensure consistent casing of file names on all platforms
+  },
+  "include": [
+    "src/**/*" // include all files in the "src" directory and its subdirectories
+  ],
+  "exclude": [
+    "node_modules" // exclude the "node_modules" directory
+  ]
 }
