@@ -14,7 +14,7 @@ class AirhornStatsStore extends EventEmitter {
     super();
 
     if (EventSource) {
-      const eventSource = new EventSource('https://airhorn.solutions/api/events');
+      const eventSource = new EventSource('https://bot.airhorn.solutions/api/events');
       eventSource.onmessage = this.receivedMessage.bind(this);
     }
   }
