@@ -1,0 +1,39 @@
+# The infrastructure needed to manage this is located in
+# discord/discord_devops/terraform/discord-app-city/prd/airhorn.tf
+
+name: airhorn-website-deploy
+on:
+  push:
+    paths:
+      - "website/**"
+      - ".github/workflows/website-deploy.yml"
+    branches:
+      - main
+defaults:
+  run:
+    working-directory: website
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - uses: actions/checkout@v3
+      - id: auth
+        uses: "google-github-actions/auth@v1"
+        with:
+          workload_identity_provider: "projects/626179414504/locations/global/workloadIdentityPools/ga-bot-airhorn-website/providers/ga-bot-airhorn-website"
+          service_account: "ga-bot-airhorn-website@discord-app-city-prd.iam.gserviceaccount.com"
+      - id: "secrets"
+        uses: "google-github-actions/get-secretmanager-secrets@v1"
+        with:
+          secrets: |-
+            token:discord-app-city-prd/bot-airhorn-website-deploy-token
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run publish
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ steps.secrets.outputs.token }}
