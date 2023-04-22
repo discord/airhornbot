@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
-import dispatcher from '../dispatcher';
 import queryString from 'query-string';
 import Constants from '../Constants';
+import dispatcher from '../dispatcher';
 
 let shouldPlayVideo = false;
 let onMessage;

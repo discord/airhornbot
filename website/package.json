@@ -9,8 +9,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack serve --mode development",
-    "fix": "eslint --fix 'src/**/*.{ts,tsx}' --max-warnings=0",
-    "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
+    "fix": "eslint --fix \"src/**/*.{ts,tsx}\" --max-warnings=0",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
     "prepublish": "npm run build",
     "publish": "wrangler pages publish --project-name airhorn-website build"
   },

@@ -1,5 +1,5 @@
-import dispatcher from '../dispatcher';
 import Constants from '../Constants';
+import dispatcher from '../dispatcher';
 
 export function showStatsPanel() {
   dispatcher.dispatch({

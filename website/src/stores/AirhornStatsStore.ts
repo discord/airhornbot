@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
-import dispatcher from '../dispatcher';
 import Constants from '../Constants';
 import { MessageEventData } from '../declarations/EventSource';
+import dispatcher from '../dispatcher';
 
 let count = 0;
 let uniqueUsers = 0;
@@ -14,7 +14,7 @@ class AirhornStatsStore extends EventEmitter {
     super();
 
     if (EventSource) {
-      const eventSource = new EventSource('https://bot.airhorn.solutions/api/events');
+      const eventSource = new EventSource(`${Constants.AIRHORN_API_URL}/events`);
       eventSource.onmessage = this.receivedMessage.bind(this);
     }
   }

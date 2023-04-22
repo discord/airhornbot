@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
-import dispatcher from '../dispatcher';
 import Constants from '../Constants';
+import dispatcher from '../dispatcher';
 
 class ShareStore extends EventEmitter {
   shareWithFacebook() {
