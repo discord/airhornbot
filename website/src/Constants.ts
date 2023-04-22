@@ -1,5 +1,5 @@
-const AIRHORN_URL = process.env.WEBSITE_URL || 'https://airhorn.solutions';
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID || '159799960412356608';
+const AIRHORN_URL = 'https://airhorn.solutions';
+const DISCORD_CLIENT_ID = '159799960412356608';
 
 export default {
   DISCORD_URL: 'https://discord.com/?utm_source=airhornsubtext&utm_medium=website&utm_campaign=airhorn',

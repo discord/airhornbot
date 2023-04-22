@@ -5,14 +5,13 @@ import 'webpack-dev-server';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
-import { EnvironmentPlugin } from 'webpack';
 
 const config: webpack.Configuration = {
   entry: './src/index.tsx',
   output: {
     filename: '[contenthash].js',
     path: path.resolve(__dirname, 'build', 'assets'),
-    publicPath: `${process.env.WEBSITE_URL || ''}/assets/`,
+    publicPath: '/assets/',
     crossOriginLoading: 'anonymous',
   },
   plugins: [
@@ -21,7 +20,6 @@ const config: webpack.Configuration = {
       filename: '../index.html',
     }),
     new SubresourceIntegrityPlugin(),
-    new EnvironmentPlugin(['WEBSITE_URL', 'DISCORD_CLIENT_ID']),
     new CopyWebpackPlugin({
       patterns: [
         {
