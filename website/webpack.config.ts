@@ -19,6 +19,10 @@ const config: webpack.Configuration = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public', 'index.html'),
       filename: '../index.html',
+      meta: {
+        url: process.env.WEBSITE_URL,
+        'og:url': process.env.WEBSITE_URL,
+      },
     }),
     new SubresourceIntegrityPlugin(),
     new EnvironmentPlugin(['WEBSITE_URL', 'WEBSITE_API_URL', 'DISCORD_CLIENT_ID']),
