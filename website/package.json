@@ -10,7 +10,9 @@
     "build": "webpack --mode production",
     "start": "webpack serve --mode development",
     "fix": "eslint --fix 'src/**/*.{ts,tsx}' --max-warnings=0",
-    "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0"
+    "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
+    "prepublish": "npm run build",
+    "publish": "wrangler pages publish --project-name airhorn-website build"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
@@ -24,19 +26,19 @@
     "@types/webpack": "^5.28.1",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
-    "eslint": "^8.11.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.8.4",
     "babel-loader": "^9.1.2",
     "copy-webpack-plugin": "^11.0.0",
     "create-react-class": "^15.7.0",
     "css-loader": "^6.7.3",
     "detect-browser": "^5.3.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "numeral": "^2.0.6",
     "parallax-js": "^3.1.0",
+    "prettier": "^2.8.4",
     "query-string": "^8.1.0",
     "react-tooltip": "^5.10.5",
     "style-loader": "^3.3.2",
@@ -48,7 +50,8 @@
     "webpack": "^5.78.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.2",
-    "webpack-subresource-integrity": "^5.2.0-rc.1"
+    "webpack-subresource-integrity": "^5.2.0-rc.1",
+    "wrangler": "^2.15.0"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
