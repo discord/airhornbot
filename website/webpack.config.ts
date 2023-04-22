@@ -32,6 +32,10 @@ const config: webpack.Configuration = {
           from: 'public/robots.txt',
           to: '../robots.txt',
         },
+        {
+          from: 'public/404.html',
+          to: '../404.html',
+        },
       ],
     }),
   ],
