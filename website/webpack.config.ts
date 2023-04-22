@@ -1,9 +1,10 @@
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import 'dotenv/config';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
 import * as webpack from 'webpack';
+import { EnvironmentPlugin } from 'webpack';
 import 'webpack-dev-server';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 
 const config: webpack.Configuration = {
@@ -11,7 +12,7 @@ const config: webpack.Configuration = {
   output: {
     filename: '[contenthash].js',
     path: path.resolve(__dirname, 'build', 'assets'),
-    publicPath: '/assets/',
+    publicPath: `${process.env.WEBSITE_URL || ''}/assets/`,
     crossOriginLoading: 'anonymous',
   },
   plugins: [
@@ -20,6 +21,7 @@ const config: webpack.Configuration = {
       filename: '../index.html',
     }),
     new SubresourceIntegrityPlugin(),
+    new EnvironmentPlugin(['WEBSITE_URL', 'WEBSITE_API_URL', 'DISCORD_CLIENT_ID']),
     new CopyWebpackPlugin({
       patterns: [
         {

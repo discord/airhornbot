@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
-import dispatcher from '../dispatcher';
-import * as ResponsiveActions from '../actions/ResponsiveActions';
 import Constants from '../Constants';
+import * as ResponsiveActions from '../actions/ResponsiveActions';
+import dispatcher from '../dispatcher';
 
 class ResponsiveStore extends EventEmitter {
   constructor() {

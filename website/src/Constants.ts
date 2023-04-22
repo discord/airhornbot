@@ -1,5 +1,6 @@
-const AIRHORN_URL = 'https://airhorn.solutions';
-const DISCORD_CLIENT_ID = '159799960412356608';
+const AIRHORN_URL = process.env.WEBSITE_URL || 'https://airhorn.solutions';
+const AIRHORN_API_URL = process.env.WEBSITE_API_URL || 'https://bot.airhorn.solutions/api';
+const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID || '159799960412356608';
 
 export default {
   DISCORD_URL: 'https://discord.com/?utm_source=airhornsubtext&utm_medium=website&utm_campaign=airhorn',
@@ -8,6 +9,7 @@ export default {
     return `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&permissions=3146752&scope=applications.commands%20bot`;
   },
   AIRHORN_URL,
+  AIRHORN_API_URL,
   SMALL_ISLAND_COUNT: 12,
   UNIQUE_SMALL_ISLAND_COUNT: 6,
   LARGE_ISLAND_COUNT: 10,
