@@ -16,4 +16,5 @@ jobs:
           node-version: 18
       - run: cp .env.example .env
       - run: npm install
+      - run: cp .env.example .env
       - run: npm run lint
