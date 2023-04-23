@@ -38,3 +38,4 @@ jobs:
       - run: npm run publish
         env:
           CLOUDFLARE_API_TOKEN: ${{ steps.secrets.outputs.token }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
