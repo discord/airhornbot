@@ -18,7 +18,7 @@ export class StatsCommand extends DiscordChatInputCommand {
         counter: true,
       },
     });
-    lines.push(`**Global:** ${totalUsages._sum.counter}`);
+    lines.push(`**Global:** ${totalUsages._sum.counter || 0}`);
     if (commandInteraction.inGuild()) {
       const guildUsages = await prismaClient.usage.aggregate({
         _sum: {
@@ -28,7 +28,7 @@ export class StatsCommand extends DiscordChatInputCommand {
           guildId: BigInt(commandInteraction.guildId),
         },
       });
-      lines.push(`**Guild:** ${guildUsages._sum.counter}`);
+      lines.push(`**Guild:** ${guildUsages._sum.counter || 0}`);
     }
     const userUsages = await prismaClient.usage.aggregate({
       _sum: {
@@ -38,7 +38,7 @@ export class StatsCommand extends DiscordChatInputCommand {
         userId: BigInt(commandInteraction.user.id),
       },
     });
-    lines.push(`**You:** ${userUsages._sum.counter}`);
+    lines.push(`**You:** ${userUsages._sum.counter || 0}`);
     await commandInteraction.editReply({
       content: lines.join('\n'),
     });

@@ -87,14 +87,14 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     let selectedVariant = soundsForSoundCommand[Math.floor(Math.random() * soundsForSoundCommand.length)];
     // Check to see if a sound variant is specified (if it is, set the selected variant to the correct one)
     const variantOption = commandInteraction.options.getInteger('variant', false);
-    if (!variantOption) {
+    if (variantOption !== null) {
       const foundVariant = soundsForSoundCommand.filter((sound) => sound.id === variantOption)[0] || undefined;
       if (foundVariant) {
         selectedVariant = foundVariant;
       }
     }
     // If it is disabled or missing
-    if (!variantOption && variantOption !== selectedVariant.id) {
+    if (variantOption !== null && variantOption !== selectedVariant.id) {
       await commandInteraction.reply({
         content: 'The sound requested was not found.',
         ephemeral: true,
