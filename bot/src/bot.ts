@@ -58,7 +58,8 @@ discordClient.on('shardReconnecting', shardReconnectingListener);
 export const prismaClient = new PrismaClient();
 
 async function main() {
-  discordClient.login(process.env.DISCORD_TOKEN);
+  await prismaClient.$connect();
+  await discordClient.login(process.env.DISCORD_TOKEN);
 }
 
 main()

@@ -54,6 +54,7 @@ expressApplication.use((err: Error, _req: Request, res: Response) => {
 export const prismaClient = new PrismaClient();
 
 async function main() {
+  await prismaClient.$connect();
   discordApplicationInformation = (await discordRestClient.get(
     Routes.oauth2CurrentApplication()
   )) as RESTGetAPIOAuth2CurrentApplicationResult;
