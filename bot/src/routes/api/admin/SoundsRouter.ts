@@ -33,7 +33,7 @@ soundsRouter.post('/', async (req: Request, res: Response) => {
       .notEmpty()
       .bail()
       .custom((value: string) => {
-        if (!value.startsWith('./sounds/') && !value.startsWith('http://') && !value.startsWith('http://')) {
+        if (!value.startsWith('./sounds/') && !value.startsWith('http://') && !value.startsWith('https://')) {
           throw new Error();
         }
         return true;
@@ -183,7 +183,7 @@ soundsRouter.patch(
         .notEmpty()
         .bail()
         .custom((value: string) => {
-          if (!value.startsWith('./sounds/') && !value.startsWith('http://') && !value.startsWith('http://')) {
+          if (!value.startsWith('./sounds/') && !value.startsWith('http://') && !value.startsWith('https://')) {
             throw new Error();
           }
           return true;
