@@ -51,7 +51,7 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.2",
     "webpack-subresource-integrity": "^5.2.0-rc.1",
-    "wrangler": "^3.1.1"
+    "wrangler": "^3.19.0"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
