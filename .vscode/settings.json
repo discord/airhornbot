@@ -3,5 +3,35 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
-  }
+  },
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "discord",
+      "database": "discord.gg",
+      "username": "newthartmark@yahoo.com",
+      "group": ".gg"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "localhost",
+      "database": "discord.gg",
+      "username": "newthartmark@yahoo.com"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "scrm",
+      "database": "discord.gg",
+      "username": "newthartmark@yahoo.com"
+    }
+  ]
 }
