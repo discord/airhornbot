@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "cells": [
+    {
+      "type": "markdown",
+      "content": [
+        "### My Amazing IDL Notebook",
+        "",
+        "> Don't forget to save me to disk in order to get hover-help and auto-complete!"
+      ],
+      "metadata": {},
+      "outputs": []
+    },
+    {
+      "type": "code",
+      "content": [
+        "print, 'Hello world! IDL Notebooks are awesome.'"
+      ],
+      "metadata": {},
+      "outputs": []
+    }
+  ]
+}
