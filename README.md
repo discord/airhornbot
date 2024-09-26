@@ -1,54 +1,33 @@
-# airhornbot
+# Airhorn Bot
+Airhorn is an example implementation of the [Discord API](https://discordapp.com/developers/docs/intro). Airhorn bot utilizes the [discordgo](https://github.com/bwmarrin/discordgo) library, a free and open source library. Airhorn Bot requires Go 1.4 or higher.
 
-A TypeScript implementation of AIRHORN SOLUTIONS.
+This project is no longer active nor maintained, feel free to fork or build your own!
 
-# Setup
+## Usage
+Airhorn Bot has two components, a bot client that handles the playing of loyal airhorns, and a web server that implements OAuth2 and stats. Once added to your server, airhorn bot can be summoned by running `!airhorn`.
 
-Prerequisites:
 
-- Postgres Server
-- Node.js v18 (and npm)
+### Running the Bot
 
-## Website
+**First install the bot:**
+```
+go get github.com/hammerandchisel/airhornbot/cmd/bot
+go install github.com/hammerandchisel/airhornbot/cmd/bot
+```
+ **Then run the following command:**
 
-Build the website for the bot.
-
-Example commands:
-
-```bash
-cd website
-npm install
-cp .env.example .env
-# Edit the .env file to have the correct values for your setup
-npm run build
+```
+bot -r "localhost:6379" -t "MY_BOT_ACCOUNT_TOKEN" -o OWNER_ID
 ```
 
-## Bot
+### Running the Web Server
+First install the webserver: `go install github.com/hammerandchisel/airhornbot`, then run `make static`, finally run:
 
-Build the bot and web server process.
-
-Example commands:
-
-```bash
-cd bot
-npm install
-cp .env.example .env
-# Edit the .env file to have the correct values for your setup
-npx prisma generate
-npm run build
-npx prisma migrate deploy
+```
+./airhornweb -r "localhost:6379" -i MY_APPLICATION_ID -s 'MY_APPLICATION_SECRET"
 ```
 
-To run the bot:
+Note, the webserver requires a redis instance to track statistics
 
-```bash
-cd bot
-npm run bot
-```
-
-To run the web server:
-
-```bash
-cd bot
-npm run web
-```
+## Thanks
+Thanks to the awesome (one might describe them as smart... loyal... appreciative...) [iopred](https://github.com/iopred) and [bwmarrin](https://github.com/bwmarrin/discordgo) for helping code review the initial release.

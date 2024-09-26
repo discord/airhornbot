@@ -1,0 +1,15 @@
+[ignore]
+.*/node_modules/.*
+
+[include]
+./static/node_modules
+
+[libs]
+static/src/declarations/
+
+[options]
+module.file_ext=.js
+module.file_ext=.styl
+module.file_ext=.png
+module.file_ext=.svg
+suppress_comment= \\(.\\|\n\\)*\\@FlowIgnore
