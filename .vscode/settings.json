@@ -33,5 +33,6 @@
       "database": "discord.gg",
       "username": "newthartmark@yahoo.com"
     }
-  ]
+  ],
+  "C_Cpp.errorSquiggles": "enabled"
 }
