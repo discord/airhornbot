@@ -42,7 +42,7 @@
     "unicode-emoji": "^2.6.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "overrides": {
     "tar": "^7.5.10",
