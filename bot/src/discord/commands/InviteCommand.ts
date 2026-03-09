@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction, MessageFlags } from 'discord.js';
 import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
 
 export class InviteCommand extends DiscordChatInputCommand {
@@ -15,7 +15,7 @@ export class InviteCommand extends DiscordChatInputCommand {
     const inviteLink = `https://discord.com/api/oauth2/authorize?client_id=${application.id}&permissions=3146752&scope=applications.commands%20bot`;
     await commandInteraction.reply({
       content: `Add this bot to your server: [Click here!](${inviteLink})`,
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     });
     return;
   }

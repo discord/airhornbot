@@ -1,4 +1,4 @@
-import { Client, Interaction } from 'discord.js';
+import { Client, Interaction, MessageFlags } from 'discord.js';
 import { prismaClient } from '../../bot.js';
 import { generateRegisterCommandsBody } from '../../utils/RegisterCommandsUtils.js';
 import { PlaySoundButton } from '../buttons/PlaySoundButton.js';
@@ -51,7 +51,7 @@ export async function interactionCreateListener(interaction: Interaction): Promi
     } catch (e) {
       await interaction.reply({
         content: 'The button requested was invalid.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -59,14 +59,14 @@ export async function interactionCreateListener(interaction: Interaction): Promi
     if (!discordButton) {
       await interaction.reply({
         content: 'The button requested was not found.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
     if (customIdParsed.v === undefined || customIdParsed.v < discordButton.buttonConfiguration.version) {
       await interaction.reply({
         content: 'The button requested was outdated, try running the command again.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
