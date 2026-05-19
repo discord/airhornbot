@@ -25,7 +25,7 @@ const config: webpack.Configuration = {
       },
     }),
     new SubresourceIntegrityPlugin(),
-    new EnvironmentPlugin(['WEBSITE_URL', 'WEBSITE_API_URL', 'DISCORD_CLIENT_ID']),
+    new EnvironmentPlugin({ WEBSITE_URL: '', WEBSITE_API_URL: '', DISCORD_CLIENT_ID: '' }),
     new CopyWebpackPlugin({
       patterns: [
         {

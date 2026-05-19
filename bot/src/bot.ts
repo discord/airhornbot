@@ -18,7 +18,12 @@ export const log: Logger<ILogObj> = new Logger({
 
 // Handle all uncaught exceptions
 process.on('uncaughtException', function (e) {
-  log.error(e);
+  if (e instanceof Error) {
+    const code = (e as unknown as { code?: string }).code;
+    log.error(`[${e.name}${code ? `:${code}` : ''}] ${e.message}\n${e.stack}`);
+  } else {
+    log.error(String(e));
+  }
 });
 
 let discordShards: number[] | 'auto' = 'auto';
@@ -45,11 +50,11 @@ export const discordClient = new Client({
     ],
   },
   shards: discordShards,
-  shardCount: discordShardCount,
+  ...(discordShardCount !== undefined && { shardCount: discordShardCount }),
 });
 
 discordClient.on('interactionCreate', interactionCreateListener);
-discordClient.on('ready', readyListener);
+discordClient.on('clientReady', readyListener);
 discordClient.on('shardReady', shardReadyListener);
 discordClient.on('shardResume', shardResumeListener);
 discordClient.on('shardDisconnect', shardDisconnectListener);
