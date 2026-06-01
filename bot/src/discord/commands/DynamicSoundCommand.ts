@@ -5,6 +5,7 @@ import {
   ButtonStyle,
   ChatInputCommandInteraction,
   MessageActionRowComponentBuilder,
+  MessageFlags,
   PermissionFlagsBits,
 } from 'discord.js';
 import { prismaClient } from '../../bot.js';
@@ -30,14 +31,14 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     if (!commandInteraction.member || !commandInteraction.guildId) {
       await commandInteraction.reply({
         content: 'You cannot trigger the bot in a direct message.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
     if (!commandInteraction.guild) {
       await commandInteraction.reply({
         content: 'The bot must be in the server, try to re-invite it.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -46,7 +47,7 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     if (!botGuildMember) {
       await commandInteraction.reply({
         content: 'The bot was not found in the server.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -59,14 +60,14 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     if (!soundCommand) {
       await commandInteraction.reply({
         content: 'No sound was found for this command.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
     if (soundCommand.disabled) {
       await commandInteraction.reply({
         content: 'The sound command requested is disabled.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -80,7 +81,7 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     if (soundsForSoundCommand.length === 0) {
       await commandInteraction.reply({
         content: 'No sounds were found for the command requested.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -97,7 +98,7 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     if (variantOption !== null && variantOption !== selectedVariant.id) {
       await commandInteraction.reply({
         content: 'The sound requested was not found.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -105,14 +106,14 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     if (!voiceState || !voiceState.channel) {
       await commandInteraction.reply({
         content: 'You need to be in a voice channel to run this command.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
     if (!botGuildMember.permissionsIn(voiceState.channel).has(PermissionFlagsBits.Connect)) {
       await commandInteraction.reply({
         content: 'The bot does not have permissions to connect to the voice channel.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -122,7 +123,7 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     ) {
       await commandInteraction.reply({
         content: 'Too many items are in the queue! Try again in a moment.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -169,7 +170,7 @@ export class DynamicSoundCommand extends DiscordChatInputCommand {
     await commandInteraction.reply({
       content: `Dispatching sound...`,
       components: [actionRow],
-      ephemeral: false,
+      flags: MessageFlags.Ephemeral,
     });
     return;
   }

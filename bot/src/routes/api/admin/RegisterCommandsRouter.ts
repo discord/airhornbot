@@ -26,7 +26,11 @@ registerCommandsRouter.post('/', async (_req: Request, res: Response) => {
       responseFromDiscord: apiResponse,
     });
   } catch (e) {
-    log.error(e);
+    try {
+      log.error(e);
+    } catch {
+      console.error(e);
+    }
     res.status(500).json({
       message: 'An error occurred, please check the logs.',
     });

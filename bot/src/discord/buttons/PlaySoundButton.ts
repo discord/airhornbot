@@ -1,4 +1,4 @@
-import { ButtonInteraction, PermissionFlagsBits } from 'discord.js';
+import { ButtonInteraction, MessageFlags, PermissionFlagsBits } from 'discord.js';
 import { prismaClient } from '../../bot.js';
 import { DEFAULT_AIRHORN_MAX_QUEUE_ITEMS, enqueSound, getTotalItemsInGuildQueue } from '../../utils/AirhornAudio.js';
 import { DiscordButton } from '../types/DiscordButton.js';
@@ -14,14 +14,14 @@ export class PlaySoundButton extends DiscordButton {
     if (!buttonInteraction.member || !buttonInteraction.guildId) {
       await buttonInteraction.reply({
         content: 'You cannot trigger the bot in a direct message.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
     if (!buttonInteraction.guild) {
       await buttonInteraction.reply({
         content: 'The bot must be in the server, try to re-invite it.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -30,7 +30,7 @@ export class PlaySoundButton extends DiscordButton {
     if (!botGuildMember) {
       await buttonInteraction.reply({
         content: 'The bot was not found in the server.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -40,7 +40,7 @@ export class PlaySoundButton extends DiscordButton {
     if (!soundCommandId && !soundId) {
       await buttonInteraction.reply({
         content: 'No sound or sound command was set for this button.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -54,7 +54,7 @@ export class PlaySoundButton extends DiscordButton {
     if (soundsForSoundCommand.length === 0) {
       await buttonInteraction.reply({
         content: 'No sounds were found for the button requested.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -70,7 +70,7 @@ export class PlaySoundButton extends DiscordButton {
     if (!soundId && soundId !== selectedVariant.id) {
       await buttonInteraction.reply({
         content: 'The sound requested was not found.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -78,14 +78,14 @@ export class PlaySoundButton extends DiscordButton {
     if (!voiceState || !voiceState.channel) {
       await buttonInteraction.reply({
         content: 'You need to be in a voice channel to run this command.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
     if (!botGuildMember.permissionsIn(voiceState.channel).has(PermissionFlagsBits.Connect)) {
       await buttonInteraction.reply({
         content: 'The bot does not have permissions to connect to the voice channel.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -95,7 +95,7 @@ export class PlaySoundButton extends DiscordButton {
     ) {
       await buttonInteraction.reply({
         content: 'Too many items are in the queue! Try again in a moment.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }

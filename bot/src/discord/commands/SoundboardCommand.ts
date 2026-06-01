@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction } from 'discord.js';
+import { ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction, MessageFlags } from 'discord.js';
 import { prismaClient } from '../../bot.js';
 import { convertButtonsIntoButtonGrid } from '../../utils/InteractionUtilts.js';
 import { DiscordChatInputCommand } from '../types/DiscordChatInputCommand.js';
@@ -22,7 +22,7 @@ export class SoundboardCommand extends DiscordChatInputCommand {
     if (!commandInteraction.member || !commandInteraction.guildId) {
       await commandInteraction.reply({
         content: 'You cannot trigger the bot in a direct message.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -35,14 +35,14 @@ export class SoundboardCommand extends DiscordChatInputCommand {
     if (!soundCommand) {
       await commandInteraction.reply({
         content: 'The sound command requested was not found.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
     if (soundCommand.disabled) {
       await commandInteraction.reply({
         content: 'The sound command requested is currently disabled.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -56,7 +56,7 @@ export class SoundboardCommand extends DiscordChatInputCommand {
     if (soundsForSoundCommand.length === 0) {
       await commandInteraction.reply({
         content: 'No sounds were found for the command requested.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -90,7 +90,7 @@ export class SoundboardCommand extends DiscordChatInputCommand {
     await commandInteraction.reply({
       content: 'Here are the options for that sound.',
       components: convertButtonsIntoButtonGrid(buttons),
-      ephemeral: false,
+      flags: MessageFlags.Ephemeral,
     });
     return;
   }

@@ -7,7 +7,7 @@ A TypeScript implementation of AIRHORN SOLUTIONS.
 Prerequisites:
 
 - Postgres Server
-- Node.js v18 (and npm)
+- Node.js v22+ (and npm)
 
 ## Website
 

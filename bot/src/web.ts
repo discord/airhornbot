@@ -14,7 +14,11 @@ export const log: Logger<ILogObj> = new Logger({
 
 // Handle all uncaught exceptions
 process.on('uncaughtException', function (e) {
-  log.error(e);
+  try {
+    log.error(e);
+  } catch {
+    console.error('Uncaught exception:', e);
+  }
 });
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
