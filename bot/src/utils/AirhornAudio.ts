@@ -102,7 +102,11 @@ export async function enqueSound(
       });
     }
   } catch (e) {
-    try { log.error(e); } catch { console.error(e); }
+    try {
+      log.error(e);
+    } catch {
+      console.error(e);
+    }
     // Delete the queue if we encountered an error
     guildQueues.delete(channel.guildId);
   }
