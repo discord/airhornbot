@@ -2,12 +2,15 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import 'dotenv/config';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as path from 'path';
-import * as webpack from 'webpack';
-import { EnvironmentPlugin } from 'webpack';
+import webpack from 'webpack';
+import type { Configuration } from 'webpack';
 import 'webpack-dev-server';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 
-const config: webpack.Configuration = {
+// Loaded as native ESM by Node, where __dirname is not defined.
+const __dirname = import.meta.dirname;
+
+const config: Configuration = {
   entry: './src/index.tsx',
   output: {
     filename: '[contenthash].js',
@@ -25,7 +28,7 @@ const config: webpack.Configuration = {
       },
     }),
     new SubresourceIntegrityPlugin(),
-    new EnvironmentPlugin(['WEBSITE_URL', 'WEBSITE_API_URL', 'DISCORD_CLIENT_ID']),
+    new webpack.EnvironmentPlugin(['WEBSITE_URL', 'WEBSITE_API_URL', 'DISCORD_CLIENT_ID']),
     new CopyWebpackPlugin({
       patterns: [
         {
