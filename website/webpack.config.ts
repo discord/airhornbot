@@ -7,8 +7,7 @@ import type { Configuration } from 'webpack';
 import 'webpack-dev-server';
 import { SubresourceIntegrityPlugin } from 'webpack-subresource-integrity';
 
-// Loaded as native ESM by Node, where __dirname is not defined.
-const __dirname = import.meta.dirname;
+const __dirname = path.resolve();
 
 const config: Configuration = {
   entry: './src/index.tsx',
